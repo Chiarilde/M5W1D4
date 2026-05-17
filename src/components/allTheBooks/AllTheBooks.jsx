@@ -1,50 +1,37 @@
-import { useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import fantasy from "../../assets/fantasy.json";
-import SingleBook from "./SingleBook";
+import SingleBook from "../allTheBooks/SingleBook";
+import CommentArea from "../comment/CommentArea";
+import { useState } from "react";
 
-const AllTheBooks = () => {
-    const [title, setTitle] = useState("");
-
-    const handleChange = (event) => {
-        const value = event.target.value;
-        setTitle(value);
-    };
+const AllTheBooks = ({ searchBook }) => {
+    const [selected, setSelected] = useState(false);
 
     return (
-        <>
-            <input
-                type="text"
-                placeholder="cerca per titolo..."
-                value={title}
-                onChange={handleChange}
-                style={{ minWidth: "18rem", borderRadius: ".33rem" }}
-            />
-            <div
-                className="container mt-4"
-                style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "1rem",
-                    justifyContent: "center",
-                }}
-            >
-                {fantasy
-                    .filter((book) => {
-                        return book.title
-                            .toLowerCase()
-                            .includes(title.toLowerCase());
-                    })
-                    .map((book) => {
-                        return (
-                            <SingleBook
-                                key={book.asin}
-                                img={book.img}
-                                title={book.title}
-                            />
-                        );
-                    })}
-            </div>
-        </>
+        <Row>
+            <Col md={8}>
+                <Row className="g-2 mt-3">
+                    {fantasy
+                        .filter((b) =>
+                            b.title.toLowerCase().includes(searchBook),
+                        )
+                        .map((book) => {
+                            return (
+                                <Col xs={12} md={4} key={book.asin}>
+                                    <SingleBook
+                                        book={book}
+                                        selected={selected}
+                                        setSelected={setSelected}
+                                    />
+                                </Col>
+                            );
+                        })}
+                </Row>
+            </Col>
+            <Col md={4}>
+                <CommentArea asin={selected} />
+            </Col>
+        </Row>
     );
 };
 
