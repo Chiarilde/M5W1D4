@@ -1,6 +1,6 @@
 import { Button, ListGroup } from "react-bootstrap";
 
-const SingleComment = ({ comment }) => {
+const SingleComment = ({ comment, getComments }) => {
     const deleteComment = async (asin) => {
         try {
             let response = await fetch(
@@ -9,12 +9,13 @@ const SingleComment = ({ comment }) => {
                     method: "DELETE",
                     headers: {
                         Authorization:
-                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA5ZjgxYTk5NGE2NzAwMTU1ZjZkMDAiLCJpYXQiOjE3NzkwMzgyMzQsImV4cCI6MTc4MDI0NzgzNH0.KKJF7fETQih2uqm_VL2z60Ej02FFZlhcAeJDk3AP8is",
+                            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA5ZjgxYTk5NGE2NzAwMTU1ZjZkMDAiLCJpYXQiOjE3NzkwMzgyMzQsImV4cCI6MTc4MDI0NzgzNH0.KKJF7fETQih2uqm_VL2z60Ej02FFZlhcAeJDk3AP8is",
                     },
                 },
             );
             if (response.ok) {
                 alert("Recensione cancellata");
+                getComments();
             } else {
                 throw new Error("Recensione non cancellata");
             }
@@ -26,6 +27,7 @@ const SingleComment = ({ comment }) => {
     return (
         <ListGroup.Item>
             {comment.comment}
+            <p>{"⭐".repeat(comment.rate)}</p>
             <Button
                 variant="danger"
                 className="ms-2"

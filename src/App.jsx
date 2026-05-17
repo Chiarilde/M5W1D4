@@ -9,7 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "./components/notFound/NotFound";
 import BookDetails from "./components/bookDetails/bookDetails";
 
-function App() {
+const App = () => {
     const [searchBook, setSearchBook] = useState("");
     return (
         <BrowserRouter>
@@ -28,6 +28,6 @@ function App() {
             <MyFooter />
         </BrowserRouter>
     );
-}
+};
 
 export default App;

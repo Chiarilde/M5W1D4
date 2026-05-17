@@ -5,7 +5,7 @@ import CommentArea from "../comment/CommentArea";
 import { useState } from "react";
 
 const AllTheBooks = ({ searchBook }) => {
-    const [selected, setSelected] = useState(false);
+    const [selected, setSelected] = useState("");
 
     return (
         <Row>

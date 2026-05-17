@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
-const AddComment = ({ asin }) => {
+const AddComment = ({ asin, getComments }) => {
     const [comment, setComment] = useState({
         comment: "",
         rate: 1,
-        elementId: null,
+        elementId: asin,
     });
 
     useEffect(() => {
@@ -26,22 +26,23 @@ const AddComment = ({ asin }) => {
                     headers: {
                         "Content-type": "application/json",
                         Authorization:
-                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA5ZjgxYTk5NGE2NzAwMTU1ZjZkMDAiLCJpYXQiOjE3NzkwMzgyMzQsImV4cCI6MTc4MDI0NzgzNH0.KKJF7fETQih2uqm_VL2z60Ej02FFZlhcAeJDk3AP8is",
+                            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTA5ZjgxYTk5NGE2NzAwMTU1ZjZkMDAiLCJpYXQiOjE3NzkwMzgyMzQsImV4cCI6MTc4MDI0NzgzNH0.KKJF7fETQih2uqm_VL2z60Ej02FFZlhcAeJDk3AP8is",
                     },
                 },
             );
             if (response.ok) {
+                getComments();
                 alert("Recensione inviata");
                 setComment({
                     comment: "",
                     rate: 1,
-                    elementId: null,
+                    elementId: asin,
                 });
             } else {
                 throw new Error("Ops, qualcosa non ha funzionato...");
             }
-        } catch (e) {
-            alert(e);
+        } catch (err) {
+            alert(err);
         }
     };
 
@@ -74,11 +75,11 @@ const AddComment = ({ asin }) => {
                             })
                         }
                     >
-                        <option>⭐</option>
-                        <option>⭐⭐</option>
-                        <option>⭐⭐⭐</option>
-                        <option>⭐⭐⭐⭐</option>
-                        <option>⭐⭐⭐⭐⭐</option>
+                        <option value={1}>⭐</option>
+                        <option value={2}>⭐⭐</option>
+                        <option value={3}>⭐⭐⭐</option>
+                        <option value={4}>⭐⭐⭐⭐</option>
+                        <option value={5}>⭐⭐⭐⭐⭐</option>
                     </Form.Control>
                 </Form.Group>
                 <Button variant="info" type="submit">
